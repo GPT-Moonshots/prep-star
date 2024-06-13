@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1089454782510",
+    "project_id": "prep-star",
+    "storage_bucket": "prep-star.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089454782510:android:bcc8cb72f560564414c7bf",
+        "android_client_info": {
+          "package_name": "com.logiclab.prepstar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1089454782510-5jb8cncfmb87o8u48lgp4qb0uttvgsqe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.logiclab.prepstar",
+            "certificate_hash": "c0e997d86efb5ead2f38a082c6d1ac81699365be"
+          }
+        },
+        {
+          "client_id": "1089454782510-openn7jurh5sq125m1a9bje3u9kb9ucv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM5SlRxJpGqHJfflsSnk6p-7Q_uJ-wYJk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1089454782510-openn7jurh5sq125m1a9bje3u9kb9ucv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1089454782510-3i5eg02alnn4esafscuddaas3d7gec8u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.logiclab.prepstar"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
