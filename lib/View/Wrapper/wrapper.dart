@@ -52,8 +52,8 @@ class _MainWrapperState extends State<MainWrapper> {
             title: 'Practice',
           ),
           BarItem(
-            icon: Icons.settings,
-            title: 'Settings',
+            icon: Icons.person_2,
+            title: 'Profile',
           ),
         ],
       ),

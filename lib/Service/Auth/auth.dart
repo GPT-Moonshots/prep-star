@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:prepstar/Service/Auth/o_auth.dart';
+import 'package:prepstar/Service/Database/user.dart';
 
 class AuthServices {
   static FlutterSecureStorage storage = const FlutterSecureStorage();
@@ -19,7 +20,7 @@ class AuthServices {
 
       final User user = userCredential.user!;
       storage.write(key: 'uid', value: user.uid);
-      // print('Signed up as: ${user.displayName}');
+      await UserDatabase.createUser(user);
       return null;
     } catch (e) {
       // print('Sign-up failed: $e');

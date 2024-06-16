@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:prepstar/View/Auth/login_page.dart';
 import 'package:prepstar/View/HomePage/home_page.dart';
 import 'package:prepstar/View/Practice/practice.dart';
-import 'package:prepstar/View/Settings/settings.dart';
+import 'package:prepstar/View/Profile/profile.dart';
 import 'package:prepstar/View/SplashScreen/splash_screen.dart';
 import 'package:prepstar/View/Wrapper/wrapper.dart';
 
@@ -83,8 +83,8 @@ class AppNavigation {
             navigatorKey: _shellNavigatorSettings,
             routes: <RouteBase>[
               GoRoute(
-                path: "/settings",
-                name: "Settings",
+                path: "/proflie",
+                name: "Profile",
                 builder: (BuildContext context, GoRouterState state) =>
                     const Settings(),
                 routes: const [],

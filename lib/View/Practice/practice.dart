@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prepstar/Service/Auth/o_auth.dart';
 
 class Practice extends StatelessWidget {
   const Practice({super.key});
@@ -9,7 +10,11 @@ class Practice extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Practice'),
       ),
-      body: const Center(child: Text('Practice Page'),),
+      body:  Center(
+        child: ElevatedButton(onPressed: () async {
+          OauthService.logout(context);
+        }, child: Text('Logout')),
+      ),
     );
   }
 }
