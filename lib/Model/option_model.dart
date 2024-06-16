@@ -1,21 +1,20 @@
-import 'package:uuid/uuid.dart';
 
 class OptionModel {
-  String? id = const Uuid().v4();
+  bool isCorrect;
   String name;
 
-  OptionModel({this.id , required this.name});
+  OptionModel({this.isCorrect = false , required this.name});
 
   factory OptionModel.fromJson(Map<String, dynamic> json) {
     return OptionModel(
-      id: json['id'],
+      isCorrect: json['isCorrect'],
       name: json['name'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      'isCorrect': isCorrect,
       'name': name,
     };
   }

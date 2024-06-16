@@ -1,12 +1,10 @@
-import 'package:prepstar/Model/question_model.dart';
-
 class CourseModel {
   String courseId;
   String courseName;
   String courseDescription;
   String courseImageUrl;
   int totalQuestions;
-  List<QuestionModel> questions;
+  List<String> questions;
 
   CourseModel({
     required this.courseId,
@@ -19,15 +17,12 @@ class CourseModel {
 
   factory CourseModel.fromJson(Map<String, dynamic> json) {
     return CourseModel(
-      courseId: json['courseId'],
-      courseName: json['courseName'],
-      courseDescription: json['courseDescription'],
-      courseImageUrl: json['courseImageUrl'],
-      totalQuestions: json['totalQuestions'],
-      questions: (json['questions'] as List)
-          .map((e) => QuestionModel.fromJson(e))
-          .toList(),
-    );
+        courseId: json['courseId'],
+        courseName: json['courseName'],
+        courseDescription: json['courseDescription'],
+        courseImageUrl: json['courseImageUrl'],
+        totalQuestions: json['totalQuestions'],
+        questions: json['questions']);
   }
 
   Map<String, dynamic> toJson() {
@@ -37,7 +32,7 @@ class CourseModel {
       'courseDescription': courseDescription,
       'courseImageUrl': courseImageUrl,
       'totalQuestions': totalQuestions,
-      'questions': questions.map((e) => e.toJson()).toList(),
+      'questions': questions,
     };
   }
 }

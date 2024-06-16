@@ -12,5 +12,3 @@ void main() async {
     routerConfig: AppNavigation.router,
   ));
 }
-
-

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:prepstar/View/Auth/login_page.dart';
+import 'package:prepstar/View/CoursePage/course_page.dart';
 import 'package:prepstar/View/HomePage/home_page.dart';
 import 'package:prepstar/View/Practice/practice.dart';
 import 'package:prepstar/View/Profile/profile.dart';
@@ -10,7 +11,7 @@ import 'package:prepstar/View/Wrapper/wrapper.dart';
 class AppNavigation {
   AppNavigation._();
 
-  static String initial = "/splash";
+  static String initial = "/";
 
   // Private navigators
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -29,7 +30,7 @@ class AppNavigation {
     routes: [
       ///SplashScreen
       GoRoute(
-        path: '/splash',
+        path: '/',
         name: 'Splash',
         builder: (context, state) => const SplashScreen(),
       ),
@@ -59,7 +60,16 @@ class AppNavigation {
                 name: "Home",
                 builder: (BuildContext context, GoRouterState state) =>
                     const HomePage(),
-                routes: const [],
+                routes: [
+                  GoRoute(
+                    path: 'course/:courseId',
+                    name: 'CoursePage',
+                    builder: (context, state) {
+                      final courseId = state.pathParameters['courseId'];
+                      return CoursePage(courseId: courseId!);
+                    },
+                  ),
+                ],
               ),
             ],
           ),
