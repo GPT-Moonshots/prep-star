@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:prepstar/Service/Auth/auth.dart';
 import 'package:prepstar/Service/Auth/o_auth.dart';
 
 import 'constants.dart';
-import 'custom_route.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = '/auth';
@@ -56,12 +55,7 @@ class LoginScreen extends StatelessWidget {
             String? authSuccessfull = await OauthService.signInWithGoogle();
 
             if (authSuccessfull == null) {
-              FlutterSecureStorage storage = const FlutterSecureStorage();
-              String? uid = await storage.read(key: 'uid');
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Placeholder()),
-              );
+              context.goNamed('Home');
               return null;
             } else {
               return 'Sign-in with Google failed';
@@ -74,12 +68,7 @@ class LoginScreen extends StatelessWidget {
           callback: () async {
             String? authSuccessfull = await OauthService.signInWithApple();
             if (authSuccessfull == null) {
-              FlutterSecureStorage storage = const FlutterSecureStorage();
-              String? uid = await storage.read(key: 'uid');
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Placeholder()),
-              );
+              context.goNamed('Home');
               return null;
             } else {
               return 'Sign-in with Apple failed';
@@ -106,13 +95,7 @@ class LoginScreen extends StatelessWidget {
         return _signupUser(signupData);
       },
       onSubmitAnimationCompleted: () async {
-        FlutterSecureStorage storage = const FlutterSecureStorage();
-        String? uid = await storage.read(key: 'uid');
-        Navigator.of(context).pushReplacement(
-          FadePageRoute(
-            builder: (context) => Placeholder(),
-          ),
-        );
+        context.goNamed('Home');
       },
       onRecoverPassword: (name) {
         // debugPrint('Recover password info');
