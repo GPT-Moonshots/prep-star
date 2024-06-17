@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:prepstar/Model/course_model.dart';
 
 class CoursePage extends StatefulWidget {
@@ -25,42 +26,57 @@ class _CoursePageState extends State<CoursePage> {
           courseDescription: 'The is a demo course',
           courseImageUrl: '123456789',
           totalQuestions: 3,
-          questions: []);
+          questions: ['Question 1', 'Question 2', 'Question 3']);
     });
     return course;
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.courseId);
     return Scaffold(
+        appBar: AppBar(
+          title: const Text('Course Page'),
+        ),
         body: SafeArea(
-      child: FutureBuilder<CourseModel?>(
-        future: fetchCourseData(widget.courseId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
-          } else if (snapshot.hasData) {
-            return Column(
-              children: [
-                Text(snapshot.data!.courseName),
-                Text(snapshot.data!.courseDescription),
-                Text(snapshot.data!.totalQuestions.toString()),
-              ],
-            );
-          } else {
-            return const Center(
-              child: Text('No data found'),
-            );
-          }
-        },
-      ),
-    ));
+          child: FutureBuilder<CourseModel?>(
+            future: fetchCourseData(widget.courseId),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('Error: ${snapshot.error}'),
+                );
+              } else if (snapshot.hasData) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(snapshot.data!.courseName),
+                      Text(snapshot.data!.courseDescription),
+                      Text(snapshot.data!.totalQuestions.toString()),
+                      ElevatedButton(
+                        onPressed: () {
+                          context.goNamed('Questions', pathParameters: {
+                            'courseId': widget.courseId
+                          }, extra: {
+                            'questions': snapshot.data!.questions,
+                          });
+                        },
+                        child: const Text('Start Quiz'),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: Text('No data found'),
+                );
+              }
+            },
+          ),
+        ));
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:prepstar/View/Auth/login_page.dart';
+import 'package:prepstar/View/CoursePage/Questions/questions.dart';
 import 'package:prepstar/View/CoursePage/course_page.dart';
 import 'package:prepstar/View/HomePage/home_page.dart';
 import 'package:prepstar/View/Practice/practice.dart';
@@ -62,13 +63,23 @@ class AppNavigation {
                     const HomePage(),
                 routes: [
                   GoRoute(
-                    path: 'course/:courseId',
-                    name: 'CoursePage',
-                    builder: (context, state) {
-                      final courseId = state.pathParameters['courseId'];
-                      return CoursePage(courseId: courseId!);
-                    },
-                  ),
+                      path: 'course/:courseId',
+                      name: 'CoursePage',
+                      builder: (context, state) {
+                        final courseId = state.pathParameters['courseId'];
+                        return CoursePage(courseId: courseId!);
+                      },
+                      routes: [
+                        GoRoute(
+                          path: 'question',
+                          name: 'Questions',
+                          builder: (context, state) {
+                            Map<String, List<String>> data =
+                                state.extra as Map<String, List<String>>;
+                            return Questions(questions: data['questions']!);
+                          },
+                        )
+                      ]),
                 ],
               ),
             ],
