@@ -3,8 +3,9 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:prepstar/View/Auth/login_page.dart';
+import 'package:prepstar/Service/Database/user.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class OauthService {
@@ -29,8 +30,12 @@ class OauthService {
 
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
+
         final User user = userCredential.user!;
         _storage.write(key: 'uid', value: user.uid);
+        if (userCredential.additionalUserInfo!.isNewUser) {
+          await UserDatabase.createUser(user);
+        }
         return null;
       } else {
         log('Sign-in with Google failed');
@@ -69,7 +74,9 @@ class OauthService {
       final User user = userCredential.user!;
       _storage.write(key: 'uid', value: user.uid);
       // print('Signed in with Apple: ${user.displayName}');
-
+      if (userCredential.additionalUserInfo!.isNewUser) {
+        await UserDatabase.createUser(user);
+      }
       return null;
     } catch (error) {
       // print('Error signing in with Apple: $error');
@@ -80,10 +87,6 @@ class OauthService {
   static void logout(BuildContext context) async {
     await _storage.deleteAll();
     FirebaseAuth.instance.signOut();
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginScreen()),
-      (route) => false,
-    );
+    context.goNamed('Login');
   }
 }
