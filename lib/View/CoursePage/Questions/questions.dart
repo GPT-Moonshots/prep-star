@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prepstar/Model/option_model.dart';
 import 'package:prepstar/Model/question_model.dart';
 import 'package:prepstar/Service/Database/questions.dart';
+import 'package:prepstar/View/CoursePage/Questions/question_page.dart';
 
 class Questions extends StatefulWidget {
   final List questions;
@@ -46,61 +47,13 @@ class _QuestionsState extends State<Questions> {
                           } else {
                             QuestionModel? question =
                                 snapshot.data as QuestionModel;
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text('Question $index. ${question.question}'),
-                                  Expanded(
-                                    child: ListView.builder(
-                                      itemCount: question.options.length,
-                                      itemBuilder: (context, idx) {
-                                        return ListTile(
-                                          onTap: () {
-                                            selected = question.options[idx];
-                                          },
-                                          title:
-                                              Text(question.options[idx].name),
-                                        );
-                                      },
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
+                            return QuestionPage(
+                                question: question,
+                                questionNumber: index + 1,
+                                controller: controller);
                           }
                         },
                       ),
-                    ),
-                    ElevatedButton(
-                      onPressed: selected == null
-                          ? null
-                          : () {
-                              if (selected!.isCorrect) {
-                                const SnackBar(content: Text('Correct ans'));
-                              } else {
-                                const SnackBar(content: Text('incorrect ans'));
-                              }
-                            },
-                      child: const Text('Check'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.nextPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Easing.linear);
-                      },
-                      child: const Text('Next'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.previousPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Easing.linear);
-                      },
-                      child: const Text('prev'),
                     ),
                   ],
                 ),
