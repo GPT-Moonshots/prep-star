@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:prepstar/Controller/controller.dart';
 import 'package:prepstar/Model/course_model.dart';
+import 'package:prepstar/Service/Database/course.dart';
 
 class CoursePage extends StatefulWidget {
   final String courseId;
@@ -18,17 +20,7 @@ class _CoursePageState extends State<CoursePage> {
   }
 
   Future<CourseModel?> fetchCourseData(String courseId) async {
-    CourseModel course =
-        await Future.delayed(const Duration(seconds: 2)).then((value) {
-      return CourseModel(
-          courseId: '123456789',
-          courseName: 'Course 1',
-          courseDescription: 'The is a demo course',
-          courseImageUrl: '123456789',
-          totalQuestions: 3,
-          questions: ['Question 1', 'Question 2', 'Question 3']);
-    });
-    return course;
+    return await CourseDatabase.getCourse(courseId);
   }
 
   @override
@@ -58,14 +50,19 @@ class _CoursePageState extends State<CoursePage> {
                       Text(snapshot.data!.courseDescription),
                       Text(snapshot.data!.totalQuestions.toString()),
                       ElevatedButton(
-                        onPressed: () {
-                          context.goNamed('Questions', pathParameters: {
-                            'courseId': widget.courseId
-                          }, extra: {
-                            'questions': snapshot.data!.questions,
-                          });
+                          onPressed: () {
+                            context.goNamed('Questions',
+                                pathParameters: {'courseId': widget.courseId},
+                                extra: snapshot.data!.questions);
+                          },
+                          child: const Text('Start Course')),
+                      ElevatedButton(
+                        onPressed: () async {
+                          String? userId = await AppController.getUid();
+                          await CourseDatabase.buyCourse(
+                              widget.courseId, userId);
                         },
-                        child: const Text('Start Quiz'),
+                        child: const Text('Own Course'),
                       ),
                     ],
                   ),
