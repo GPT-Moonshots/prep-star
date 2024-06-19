@@ -74,9 +74,8 @@ class AppNavigation {
                           path: 'question',
                           name: 'Questions',
                           builder: (context, state) {
-                            Map<String, List<String>> data =
-                                state.extra as Map<String, List<String>>;
-                            return Questions(questions: data['questions']!);
+                            List data = state.extra as List;
+                            return Questions(questions: data);
                           },
                         )
                       ]),
