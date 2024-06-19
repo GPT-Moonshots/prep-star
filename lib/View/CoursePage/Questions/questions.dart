@@ -30,32 +30,27 @@ class _QuestionsState extends State<Questions> {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: widget.questions.length,
             itemBuilder: (context, index) {
-              return Center(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.sizeOf(context).height / 2,
-                      child: FutureBuilder(
-                        future: QuestionsDatabase.getQuestion(
-                            widget.questions[index]),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                                  ConnectionState.waiting ||
-                              snapshot.data == null) {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          } else {
-                            QuestionModel? question =
-                                snapshot.data as QuestionModel;
-                            return QuestionPage(
-                                question: question,
-                                questionNumber: index + 1,
-                                controller: controller);
-                          }
-                        },
-                      ),
-                    ),
-                  ],
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: MediaQuery.sizeOf(context).height / 2,
+                  child: FutureBuilder(
+                    future:
+                        QuestionsDatabase.getQuestion(widget.questions[index]),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting ||
+                          snapshot.data == null) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else {
+                        QuestionModel? question =
+                            snapshot.data as QuestionModel;
+                        return QuestionPage(
+                            question: question,
+                            questionNumber: index + 1,
+                            controller: controller);
+                      }
+                    },
+                  ),
                 ),
               );
             },

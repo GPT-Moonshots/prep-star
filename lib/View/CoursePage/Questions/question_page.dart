@@ -23,78 +23,99 @@ class _QuestionPageState extends State<QuestionPage>
   bool submitted = false;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Text(
-              'Question ${widget.questionNumber}.',
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text(widget.question.question),
-          ],
-        ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height / 3,
-          child: ListView.builder(
-            itemCount: widget.question.options.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(widget.question.options[index].name),
-                onTap: () {
-                  if (submitted) {
-                    return;
-                  }
-                  setState(() {
-                    selected = widget.question.options[index];
-                  });
-                },
-                tileColor: selected == widget.question.options[index]
-                    ? color
-                    : Colors.white,
-              );
-            },
+    super.build(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Q${widget.questionNumber}.',
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              Expanded(
+                child: Text(
+                  widget.question.question,
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
+            ],
           ),
-        ),
-        ElevatedButton(
-            onPressed: () {
-              if (selected == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please select an option')));
-                return;
-              }
-              if (selected!.isCorrect) {
-                setState(() {
-                  color = Colors.green;
-                });
-              } else {
-                setState(() {
-                  color = Colors.red;
-                });
-              }
-              submitted = true;
-            },
-            child: const Text('Submit')),
-        Row(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                widget.controller.nextPage(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOut);
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 2,
+            child: ListView.builder(
+              itemCount: widget.question.options.length,
+              itemBuilder: (context, index) {
+                String a = 'A';
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Material(
+                    elevation: 10,
+                    color: Colors.blueGrey,
+                    child: ListTile(
+                      title: Text(
+                          '${String.fromCharCode(a.codeUnitAt(0) + index)}. ${widget.question.options[index].name}'),
+                      onTap: () {
+                        if (submitted) {
+                          return;
+                        }
+                        setState(() {
+                          selected = widget.question.options[index];
+                        });
+                      },
+                      tileColor: selected == widget.question.options[index]
+                          ? color
+                          : Colors.white,
+                    ),
+                  ),
+                );
               },
-              child: const Text('Next'),
             ),
-            ElevatedButton(
+          ),
+          ElevatedButton(
+              onPressed: () {
+                if (selected == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Please select an option')));
+                  return;
+                }
+                if (selected!.isCorrect) {
+                  setState(() {
+                    color = Colors.green;
+                  });
+                } else {
+                  setState(() {
+                    color = Colors.red;
+                  });
+                }
+                submitted = true;
+              },
+              child: const Text('Submit')),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
                 onPressed: () {
-                  widget.controller.previousPage(
+                  widget.controller.nextPage(
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeInOut);
                 },
-                child: Text('Prev')),
-          ],
-        )
-      ],
+                child: const Text('Next'),
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    widget.controller.previousPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInOut);
+                  },
+                  child: Text('Prev')),
+            ],
+          )
+        ],
+      ),
     );
   }
 
