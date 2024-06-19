@@ -49,6 +49,7 @@ dependencies:
   uuid: ^4.4.0
   infinite_carousel: ^1.1.1
   cloud_firestore: ^5.0.1
+  fl_chart: ^0.68.0
 
 dev_dependencies:
   flutter_test:

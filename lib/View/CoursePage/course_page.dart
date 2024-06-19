@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:prepstar/Controller/controller.dart';
 import 'package:prepstar/Model/course_model.dart';
+import 'package:prepstar/Service/Database/course.dart';
 
 class CoursePage extends StatefulWidget {
   final String courseId;
@@ -17,50 +20,60 @@ class _CoursePageState extends State<CoursePage> {
   }
 
   Future<CourseModel?> fetchCourseData(String courseId) async {
-    CourseModel course =
-        await Future.delayed(const Duration(seconds: 2)).then((value) {
-      return CourseModel(
-          courseId: '123456789',
-          courseName: 'Course 1',
-          courseDescription: 'The is a demo course',
-          courseImageUrl: '123456789',
-          totalQuestions: 3,
-          questions: []);
-    });
-    return course;
+    return await CourseDatabase.getCourse(courseId);
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.courseId);
     return Scaffold(
+        appBar: AppBar(
+          title: const Text('Course Page'),
+        ),
         body: SafeArea(
-      child: FutureBuilder<CourseModel?>(
-        future: fetchCourseData(widget.courseId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
-          } else if (snapshot.hasData) {
-            return Column(
-              children: [
-                Text(snapshot.data!.courseName),
-                Text(snapshot.data!.courseDescription),
-                Text(snapshot.data!.totalQuestions.toString()),
-              ],
-            );
-          } else {
-            return const Center(
-              child: Text('No data found'),
-            );
-          }
-        },
-      ),
-    ));
+          child: FutureBuilder<CourseModel?>(
+            future: fetchCourseData(widget.courseId),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('Error: ${snapshot.error}'),
+                );
+              } else if (snapshot.hasData) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(snapshot.data!.courseName),
+                      Text(snapshot.data!.courseDescription),
+                      Text(snapshot.data!.totalQuestions.toString()),
+                      ElevatedButton(
+                          onPressed: () {
+                            context.goNamed('Questions',
+                                pathParameters: {'courseId': widget.courseId},
+                                extra: snapshot.data!.questions);
+                          },
+                          child: const Text('Start Course')),
+                      ElevatedButton(
+                        onPressed: () async {
+                          String? userId = await AppController.getUid();
+                          await CourseDatabase.buyCourse(
+                              widget.courseId, userId);
+                        },
+                        child: const Text('Own Course'),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: Text('No data found'),
+                );
+              }
+            },
+          ),
+        ));
   }
 }

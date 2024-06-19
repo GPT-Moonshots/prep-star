@@ -1,4 +1,3 @@
-import 'package:prepstar/Model/course_model.dart';
 import 'package:prepstar/Model/question_model.dart';
 
 class UserModel {
@@ -15,7 +14,7 @@ class UserModel {
   List<QuestionModel> questionsAttempted;
   List<QuestionModel> questionsSolved;
   List<QuestionModel> questionsUnsolved;
-  List<CourseModel> courses;
+  List<String> courses;
 
   UserModel({
     required this.email,
@@ -49,7 +48,7 @@ class UserModel {
       'questionsAttempted': questionsAttempted.map((e) => e.toJson()).toList(),
       'questionsSolved': questionsSolved.map((e) => e.toJson()).toList(),
       'questionsUnsolved': questionsUnsolved.map((e) => e.toJson()).toList(),
-      'courses': courses.map((e) => e.toJson()).toList(),
+      'courses': courses,
     };
   }
 
@@ -73,7 +72,5 @@ class UserModel {
         questionsUnsolved = List<QuestionModel>.from(
           map['questionsUnsolved'].map((e) => QuestionModel.fromJson(e)),
         ),
-        courses = List<CourseModel>.from(
-          map['courses'].map((e) => CourseModel.fromJson(e)),
-        );
+        courses = map['courses'];
 }

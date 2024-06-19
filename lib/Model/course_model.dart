@@ -2,9 +2,9 @@ class CourseModel {
   String courseId;
   String courseName;
   String courseDescription;
-  String courseImageUrl;
+  String? courseImageUrl;
   int totalQuestions;
-  List<String> questions;
+  List questions;
 
   CourseModel({
     required this.courseId,

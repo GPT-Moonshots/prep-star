@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prepstar/Service/Auth/o_auth.dart';
+import 'package:prepstar/Service/Database/course.dart';
 
 class Practice extends StatelessWidget {
   const Practice({super.key});
@@ -10,10 +11,25 @@ class Practice extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Practice'),
       ),
-      body:  Center(
-        child: ElevatedButton(onPressed: () async {
-          OauthService.logout(context);
-        }, child: Text('Logout')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+                onPressed: () async {
+                  OauthService.logout(context);
+                },
+                child: Text('Logout')),
+            ElevatedButton(
+              onPressed: () async {
+                await CourseDatabase.uploadCourse().then((value) {
+                  print('Course uploaded successfully!');
+                });
+              },
+              child: Text('Upload Course'),
+            )
+          ],
+        ),
       ),
     );
   }
