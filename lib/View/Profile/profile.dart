@@ -1,8 +1,8 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:prepstar/Model/question_model.dart';
 import 'package:prepstar/Model/user_model.dart';
 import 'package:prepstar/Service/Database/user.dart';
+import 'package:prepstar/View/HomePage/Widgets/course_corousel.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -52,47 +52,102 @@ class _SettingsState extends State<Settings> {
                       options: [],
                       questionId: '',
                     ));
-            return Column(
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(userModel!.profilePic == ''
-                          ? 'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg'
-                          : userModel.profilePic),
-                    ),
-                    Column(
-                      children: [
-                        Text(userModel.username),
-                        Text(userModel.email),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 200,
-                  width: 200,
-                  child: PieChart(
-                    PieChartData(
-                      sections: [
-                        PieChartSectionData(
-                          color: Colors.green,
-                          value: userModel.questionsSolved.length.toDouble(),
-                          title:
-                              'Solved ${userModel.questionsSolved.length} questions',
-                        ),
-                        PieChartSectionData(
-                          color: Colors.red,
-                          value: userModel.totalQuestionsAttempted.toDouble(),
-                          title:
-                              'Attempted ${userModel.totalQuestionsAttempted} questions',
-                        ),
-                      ],
-                    ),
+            return SingleChildScrollView(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 100,
+                        backgroundImage: NetworkImage(userModel!.profilePic ==
+                                ''
+                            ? 'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg'
+                            : userModel.profilePic),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        children: [
+                          Text(userModel.username),
+                          Text(userModel.email),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Text(
+                        'Owned Courses',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const CourseCorousel(
+                        extent: 300,
+                        height: 200,
+                        // owned: true,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        children: [
+                          Material(
+                            elevation: 5,
+                            child: ListTile(
+                              splashColor: Colors.blue.shade100,
+                              onTap: () {},
+                              title: const Text('Edit Profile'),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Material(
+                            elevation: 5,
+                            child: ListTile(
+                              splashColor: Colors.blue.shade100,
+                              onTap: () {},
+                              title: const Text('Privacy Policy'),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Material(
+                            elevation: 5,
+                            child: ListTile(
+                              splashColor: Colors.blue.shade100,
+                              onTap: () {},
+                              title: const Text('Log out'),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Material(
+                            elevation: 5,
+                            child: ListTile(
+                              splashColor: Colors.blue.shade100,
+                              onTap: () {},
+                              title: const Text('Delete Account'),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          const Text('Made with love  by LogicLab'),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                )
-              ],
+                ),
+              ),
             );
           },
         ));
