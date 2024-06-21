@@ -22,8 +22,27 @@ class _PracticeState extends State<Practice> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Card(
-              child: Text('Chat with AI'),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.3,
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Card(
+                color: Colors.transparent,
+                child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.blue,
+                      image: const DecorationImage(
+                        image: NetworkImage(
+                            'https://news.ubc.ca/wp-content/uploads/2023/08/AdobeStock_559145847.jpeg'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('Chat with AI',
+                          style: TextStyle(fontSize: 30, color: Colors.white)),
+                    )),
+              ),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.5,
