@@ -84,9 +84,9 @@ class OauthService {
     }
   }
 
-  static void logout(BuildContext context) async {
+  static Future<void> logout(BuildContext context) async {
     await _storage.deleteAll();
-    FirebaseAuth.instance.signOut();
+    await FirebaseAuth.instance.signOut();
     context.goNamed('Login');
   }
 }

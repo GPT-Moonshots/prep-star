@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prepstar/Model/question_model.dart';
 import 'package:prepstar/Model/user_model.dart';
+import 'package:prepstar/Service/Auth/o_auth.dart';
 import 'package:prepstar/Service/Database/user.dart';
 import 'package:prepstar/View/HomePage/Widgets/course_corousel.dart';
 
@@ -99,17 +100,6 @@ class _SettingsState extends State<Settings> {
                             child: ListTile(
                               splashColor: Colors.blue.shade100,
                               onTap: () {},
-                              title: const Text('Edit Profile'),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Material(
-                            elevation: 5,
-                            child: ListTile(
-                              splashColor: Colors.blue.shade100,
-                              onTap: () {},
                               title: const Text('Privacy Policy'),
                             ),
                           ),
@@ -120,7 +110,9 @@ class _SettingsState extends State<Settings> {
                             elevation: 5,
                             child: ListTile(
                               splashColor: Colors.blue.shade100,
-                              onTap: () {},
+                              onTap: () async {
+                                await OauthService.logout(context);
+                              },
                               title: const Text('Log out'),
                             ),
                           ),
@@ -133,6 +125,17 @@ class _SettingsState extends State<Settings> {
                               splashColor: Colors.blue.shade100,
                               onTap: () {},
                               title: const Text('Delete Account'),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Material(
+                            elevation: 5,
+                            child: ListTile(
+                              splashColor: Colors.blue.shade100,
+                              onTap: () {},
+                              title: const Text('More Apps'),
                             ),
                           ),
                           const SizedBox(
