@@ -14,7 +14,7 @@ class UserModel {
   List<QuestionModel> questionsAttempted;
   List<QuestionModel> questionsSolved;
   List<QuestionModel> questionsUnsolved;
-  List<String> courses;
+  List courses;
 
   UserModel({
     required this.email,

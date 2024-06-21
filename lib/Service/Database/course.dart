@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:prepstar/Controller/controller.dart';
 import 'package:prepstar/Model/course_model.dart';
 import 'package:prepstar/Model/user_courses_model.dart';
 import 'package:uuid/uuid.dart';
@@ -73,8 +74,9 @@ class CourseDatabase {
   }
 
   // GetCoursesByUser from firebase
-  static Future<List<CourseModel>> getCoursesByUser(String userId) async {
+  static Future<List<CourseModel>> getCoursesByUser() async {
     try {
+      String userId = await AppController.getUid();
       List<CourseModel> courses = [];
       await FirebaseFirestore.instance
           .collection('users')
