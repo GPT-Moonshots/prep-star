@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:prepstar/View/Practice/Camera/camera_whatsapp.dart';
 
 class Practice extends StatefulWidget {
@@ -25,23 +26,29 @@ class _PracticeState extends State<Practice> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.3,
               width: MediaQuery.of(context).size.width * 0.9,
-              child: Card(
-                color: Colors.transparent,
-                child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.blue,
-                      image: const DecorationImage(
-                        image: NetworkImage(
-                            'https://news.ubc.ca/wp-content/uploads/2023/08/AdobeStock_559145847.jpeg'),
-                        fit: BoxFit.cover,
+              child: InkWell(
+                onTap: () {
+                  context.goNamed("AIChat", pathParameters: {'chatID': '_'});
+                },
+                child: Card(
+                  color: Colors.transparent,
+                  child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.blue,
+                        image: const DecorationImage(
+                          image: NetworkImage(
+                              'https://news.ubc.ca/wp-content/uploads/2023/08/AdobeStock_559145847.jpeg'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('Chat with AI',
-                          style: TextStyle(fontSize: 30, color: Colors.white)),
-                    )),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text('Chat with AI',
+                            style:
+                                TextStyle(fontSize: 30, color: Colors.white)),
+                      )),
+                ),
               ),
             ),
             SizedBox(
