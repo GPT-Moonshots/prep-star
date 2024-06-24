@@ -4,6 +4,7 @@ import 'package:prepstar/View/Auth/login_page.dart';
 import 'package:prepstar/View/CoursePage/Questions/questions.dart';
 import 'package:prepstar/View/CoursePage/course_page.dart';
 import 'package:prepstar/View/HomePage/home_page.dart';
+import 'package:prepstar/View/Practice/AIChat/chat_page.dart';
 import 'package:prepstar/View/Practice/practice.dart';
 import 'package:prepstar/View/Profile/profile.dart';
 import 'package:prepstar/View/SplashScreen/splash_screen.dart';
@@ -93,7 +94,19 @@ class AppNavigation {
                 name: "Practice",
                 builder: (BuildContext context, GoRouterState state) =>
                     const Practice(),
-                routes: const [],
+                routes: [
+                  GoRoute(
+                    path: "aichat/:chatID",
+                    name: "AIChat",
+                    builder: (BuildContext context, GoRouterState state) {
+                      final chatId = state.pathParameters['chatID'] as String;
+                      return ChatPage(
+                        key: UniqueKey(),
+                        chatId: chatId,
+                      );
+                    },
+                  )
+                ],
               ),
             ],
           ),

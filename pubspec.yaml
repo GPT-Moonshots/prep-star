@@ -52,6 +52,13 @@ dependencies:
   fl_chart: ^0.68.0
   dash_chat_2: ^0.0.21
   chat_gpt_sdk: ^3.0.9
+  camera_camera: any
+  file_picker: any
+  flutter_sliding_up_panel: any
+  photo_gallery: any
+  photo_view: any
+  permission_handler: any
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:
